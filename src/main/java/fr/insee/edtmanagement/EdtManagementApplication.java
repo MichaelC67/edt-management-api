@@ -49,7 +49,7 @@ public class EdtManagementApplication {
 	
 	@PostConstruct
 	public void loadDB() {
-		sas.populateDB();
+		sas.initDB();
 	}
 	
 }

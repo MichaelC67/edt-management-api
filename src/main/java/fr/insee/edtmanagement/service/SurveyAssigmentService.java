@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,28 +29,50 @@ public class SurveyAssigmentService {
 	@Autowired
 	public SurveyAssigmentRepository sar;
 
-	public void populateDB() {
+	public void initDB() {
+		LOGGER.info("Init  DB from {} ", resourceFile.getFilename());
+		populateDB(resourceFile);
+	}
+
+	public void populateDB(Resource resourceFile) {
 
 		LOGGER.info("Start populating the DB from {} ", resourceFile.getFilename());
 
+		List<SurveyAssigment> lstSurveyAssignement = new ArrayList<>();
+		
+		cleanDB();
+
 		if (!resourceFile.isFile()) {
 			try (Reader reader = new InputStreamReader(resourceFile.getInputStream());) {
-				extractData(reader);
+				lstSurveyAssignement=extractData(reader);
 			} catch (IOException e) {
 				LOGGER.error("Problem with {}, database may be empty", resourceFile);
 			}
 		} else {
 			try {
 				FileReader fileReader = new FileReader(resourceFile.getFile());
-				extractData(fileReader);
+				lstSurveyAssignement=extractData(fileReader);
 			} catch (IOException e) {
 				LOGGER.error("Problem with {}, database may be empty", resourceFile);
 			}
+
 		}
+		
+		sar.saveAll(lstSurveyAssignement);
+		
+		LOGGER.info("{} survey assignments saved in DB",sar.count());
 
 	}
 
-	private void extractData(Reader reader) {
+	public void cleanDB() {
+		LOGGER.info("DB cleared !");
+		sar.deleteAll();
+	}
+
+	private List<SurveyAssigment> extractData(Reader reader) {
+
+		List<SurveyAssigment> lstSurveyAssigment = new ArrayList<>();
+
 		try (BufferedReader br = new BufferedReader(reader);) {
 
 			String line = "";
@@ -61,14 +85,15 @@ public class SurveyAssigmentService {
 				surveyAssigment.setSurveyUnitId(data[1]);
 				surveyAssigment.setReviewerId(data[2]);
 				surveyAssigment.setCampaignId(data[3]);
-				sar.save(surveyAssigment);
+				lstSurveyAssigment.add(surveyAssigment);
 			}
 
-			LOGGER.info("DB populated with {} lines", sar.count());
+			LOGGER.info("{} survey assigments extracted ", lstSurveyAssigment.size());
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return lstSurveyAssigment;
 	}
 
 }
