@@ -10,19 +10,12 @@ import fr.insee.edtmanagement.repository.SurveyAssigmentRepository;
 public class HealcheckController {
 	
 	@Autowired
-	SurveyAssigmentRepository sar;
+	private SurveyAssigmentRepository surveyAssignmentRepository;
 	
 	@GetMapping(path = "/api/info")
-	public String healthCheck() {
-				
-		Long assigmentNumber= sar.count();
-		StringBuilder sb = new StringBuilder();
-		sb.append("Info : ");
-		sb.append(assigmentNumber);
-		sb.append(" lines in database");
-		
-		return sb.toString();
-
+	public String healthCheck() {			
+		Long assigmentNumber= surveyAssignmentRepository.count();
+		return "Info : "+assigmentNumber+" lines in database";
 	}
 
 }

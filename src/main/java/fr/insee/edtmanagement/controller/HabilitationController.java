@@ -13,7 +13,7 @@ import io.swagger.v3.oas.annotations.Operation;
 public class HabilitationController {
 
 	@Autowired
-	AuthorizationService as;
+	private AuthorizationService authorizationService;
 
 	@Operation(summary = "Check the habilitation for a survey")
 	@GetMapping(path = Constants.API_HABILITATION_ENDPOINT)
@@ -22,10 +22,8 @@ public class HabilitationController {
 			@RequestParam(value = "campaign-id", required = true) String campaignId,
 			@RequestParam(value = "idep", required = true) String idep) {
 
-		if (as.isAuthorized(surveyId, expectedRole, campaignId, idep)) {
-			return Constants.HABILITATED_RESPONSE_BODY;
-		}
-		return "";
+		return authorizationService.isAuthorized(surveyId, expectedRole, campaignId, idep) ? 
+			 Constants.HABILITATED_RESPONSE_BODY : Constants.NO_HABILITATION_RESPONSE_BODY ;
 	}
 
 }

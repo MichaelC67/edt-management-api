@@ -1,59 +1,35 @@
 package fr.insee.edtmanagement.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.opencsv.bean.CsvBindByPosition;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
+@Getter @Setter @EqualsAndHashCode @ToString
 public class SurveyAssigment {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	
+    @CsvBindByPosition(position = 0)
 	private String interviewerId;
+    
+    @CsvBindByPosition(position = 1)
 	private String surveyUnitId;
+    
+    @CsvBindByPosition(position = 2)
 	private String reviewerId;
+    
+    @CsvBindByPosition(position = 3)
 	private String campaignId;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getInterviewerId() {
-		return interviewerId;
-	}
-
-	public void setInterviewerId(String interviewerId) {
-		this.interviewerId = interviewerId;
-	}
-
-	public String getSurveyUnitId() {
-		return surveyUnitId;
-	}
-
-	public void setSurveyUnitId(String surveyUnitId) {
-		this.surveyUnitId = surveyUnitId;
-	}
-
-	public String getReviewerId() {
-		return reviewerId;
-	}
-
-	public void setReviewerId(String reviewerId) {
-		this.reviewerId = reviewerId;
-	}
-
-	public String getCampaignId() {
-		return campaignId;
-	}
-
-	public void setCampaignId(String campaignId) {
-		this.campaignId = campaignId;
-	}
-
+	
+	
 }

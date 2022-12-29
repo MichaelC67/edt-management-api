@@ -15,24 +15,24 @@ import io.swagger.v3.oas.annotations.Operation;
 public class SurveyAssigmentController {
 
 	@Autowired
-	SurveyAssigmentRepository sar;
+	private SurveyAssigmentRepository surveyAssigmentRepository;
 
 	@Operation(summary = "Get the assigments informations for a survey")
 	@GetMapping(path = "/api/survey-assigment/survey-unit/{survey-id}")
 	public SurveyAssigment assigmentBySurveyID(@PathVariable(value = "survey-id") String surveyID) {
-		return sar.findBySurveyUnitId(surveyID);
+		return surveyAssigmentRepository.findBySurveyUnitId(surveyID);
 	}
 
 	@Operation(summary = "Get all the survey assigments for an interviewer")
 	@GetMapping(path = "/api/survey-assigment/interviewer/{interviewer-id}")
 	public List<SurveyAssigment> assigmentByHouseholdID(@PathVariable(value = "interviewer-id") String interviewerId) {
-		return sar.findByInterviewerId(interviewerId);
+		return surveyAssigmentRepository.findByInterviewerId(interviewerId);
 	} 
 
 	@Operation(summary = "Get all the survey assigments for reviewer")
 	@GetMapping(path = "/api/survey-assigment/reviewer/{reviewer-id}")
 	public List<SurveyAssigment> assigmentByReviewerID(@PathVariable(value = "reviewer-id") String reviewerId) {
-		return sar.findByReviewerId(reviewerId);
+		return surveyAssigmentRepository.findByReviewerId(reviewerId);
 	}
 
 }

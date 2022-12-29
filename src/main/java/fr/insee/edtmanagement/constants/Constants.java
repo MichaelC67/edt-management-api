@@ -17,5 +17,6 @@ public class Constants {
 	
 	//expected Response by Queen-Back-Office for habilitated ressources
 	public static final String HABILITATED_RESPONSE_BODY = "habilitated";
+	public static final String NO_HABILITATION_RESPONSE_BODY = "";
 
 }
