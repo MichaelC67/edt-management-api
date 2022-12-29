@@ -1,4 +1,4 @@
-FROM openjdk:17.0.2-slim
+FROM eclipse-temurin:17-jre
 VOLUME /tmp
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} app.jar
