@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,15 +21,19 @@ public class SurveyAssigment {
 	private Long id;
 	
     @CsvBindByPosition(position = 0)
+    @NotNull
 	private String interviewerId;
     
     @CsvBindByPosition(position = 1)
+    @NotNull
 	private String surveyUnitId;
     
     @CsvBindByPosition(position = 2)
+    @NotNull
 	private String reviewerId;
     
     @CsvBindByPosition(position = 3)
+    @NotNull
 	private String campaignId;
 	
 	

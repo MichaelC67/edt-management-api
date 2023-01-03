@@ -16,6 +16,7 @@ import com.opencsv.bean.CsvToBeanBuilder;
 import fr.insee.edtmanagement.domain.SurveyAssigment;
 import fr.insee.edtmanagement.repository.SurveyAssigmentRepository;
 import jakarta.annotation.PostConstruct;
+import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -35,17 +36,18 @@ public class SurveyAssigmentService {
 	private SurveyAssigmentRepository surveyAssigmentRepository;
 
 	@PostConstruct
-	public void initDB() {
+	public boolean initDB() {
 		log.info("Init  DB from {} ", initialResource.getFilename());
-		populateDB(initialResource);
+		return populateDB(initialResource);
 	}
 
-	public void populateDB(Resource resource) {
+	//TODO throw exception if failure
+	public boolean populateDB(@NotNull Resource resource) {
+		
+		boolean kDBPopulated = false;
 
 		log.info("Start populating the DB from {} ", resource.getFilename());
 		
-		cleanDB();
-
 		try (Reader reader = new BufferedReader(new InputStreamReader(resource.getInputStream()))) {
 
 			CsvToBean<SurveyAssigment> csvToBean = 
@@ -56,14 +58,21 @@ public class SurveyAssigmentService {
 					.build();
 
 			List<SurveyAssigment> lstSurveyAssigments = csvToBean.parse();
+			
+			log.info("{} survey assignments found in {} ", lstSurveyAssigments.size(),resource.getFilename() );
+			
+			cleanDB();
 
 			surveyAssigmentRepository.saveAll(lstSurveyAssigments);
 
 			log.info("{} survey assignments saved in DB", surveyAssigmentRepository.count());
+			
+			kDBPopulated = true ;
 
 		} catch (Exception e) {
 			log.error("An error occured during the load of the DB with the resource"+resource.getFilename(),e );
 		}
+		return kDBPopulated;
 	}
 
 	public void cleanDB() {

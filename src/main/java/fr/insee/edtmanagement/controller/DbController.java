@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import fr.insee.edtmanagement.constants.Constants;
 import fr.insee.edtmanagement.service.SurveyAssigmentService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
@@ -23,25 +24,20 @@ public class DbController {
 	private SurveyAssigmentService surveyAssigmentService;
 
 	@Operation(summary = "Update DB from file defined in properties")
-	@GetMapping(path = "/api/admin/update-db")
-	public void updateDB() {
-		surveyAssigmentService.initDB();
+	@GetMapping(path = Constants.API_UPDATEDB_URL)
+	public ResponseEntity<String> updateDB() {
+		log.info("Launching DB update with DbController");
+		return surveyAssigmentService.initDB() ? ResponseEntity.ok("Db updated !") : ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build() ;
 	}
 	
 	@Operation(summary = "Integrate assignment file")
 	@PostMapping(
-		    path = "/api/admin/update-db-with-file",
+		    path = Constants.API_UPDATEDB_WITH_FILE_URL,
 		   consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ResponseEntity<Object> updataDbWithFile(@RequestParam("file") final MultipartFile file) {
+	public ResponseEntity<String> updataDbWithFile(@RequestParam("file") final MultipartFile file) {
 		
-		try {
-			surveyAssigmentService.populateDB(file.getResource());
-		} catch (Exception e) {
-			log.error("Updating database with file resulting in 400");
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-		}
-		log.info("Database updated with {} ",file.getName());
-		return  ResponseEntity.status(HttpStatus.OK).build();
+		boolean kDbUpdated = surveyAssigmentService.populateDB(file.getResource());
+		return  kDbUpdated ? ResponseEntity.ok("Db Updated !") : ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 	}
 
 }
