@@ -29,11 +29,11 @@ public class AuthorizationService {
 
 	private boolean checkInterviewerHabilitation(String surveyId, String campaignId, String idep) {
 		return surveyAssigmentRepository
-				.findByReviewerIdAndSurveyUnitIdAndCampaignId(idep, surveyId, campaignId) != null;
+				.findByReviewerIdAndSurveyUnitIdAndCampaignId(idep, surveyId, campaignId).isPresent();
 	}
 
 	private boolean checkReviewerHabilitation(String surveyId, String campaignId, String idep) {
 		return surveyAssigmentRepository
-				.findByReviewerIdAndSurveyUnitIdAndCampaignId(idep, surveyId, campaignId) != null;
+				.findByReviewerIdAndSurveyUnitIdAndCampaignId(idep, surveyId, campaignId).isPresent();
 	}
 }
