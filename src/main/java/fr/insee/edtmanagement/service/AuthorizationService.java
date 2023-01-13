@@ -22,16 +22,15 @@ public class AuthorizationService {
 		if(Constants.REVIEWER.equals(expectedRole) && checkReviewerHabilitation(surveyId, campaignId, idep))
 			return true;
 		
-		// TODO Check if in Queen Back Office interviewer role is omitted
-		//if(Constants.INTERVIEWER.equals(expectedRole) && checkInterviewerHabilitation(surveyId, campaignId, idep)) return true;
+		// Queen Back Office  doesn t send role when it is an interviewer
+		 return checkInterviewerHabilitation(surveyId, campaignId, idep);
 		
-		return false;
 	}
 
-//	private boolean checkInterviewerHabilitation(String surveyId, String campaignId, String idep) {
-//		return surveyAssigmentRepository
-//				.findByReviewerIdAndSurveyUnitIdAndCampaignId(idep, surveyId, campaignId) != null;
-//	}
+	private boolean checkInterviewerHabilitation(String surveyId, String campaignId, String idep) {
+		return surveyAssigmentRepository
+				.findByReviewerIdAndSurveyUnitIdAndCampaignId(idep, surveyId, campaignId) != null;
+	}
 
 	private boolean checkReviewerHabilitation(String surveyId, String campaignId, String idep) {
 		return surveyAssigmentRepository

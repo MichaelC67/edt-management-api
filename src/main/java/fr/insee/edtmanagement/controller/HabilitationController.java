@@ -17,9 +17,9 @@ public class HabilitationController {
 
 	@Operation(summary = "Check the habilitation for a survey")
 	@GetMapping(path = Constants.API_HABILITATION_URL)
-	public String authorized(@RequestParam(value = "survey-id", required = true) String surveyId,
-			@RequestParam(value = "expected-role", required = true) String expectedRole,
-			@RequestParam(value = "campaign-id", required = true) String campaignId,
+	public String authorized(@RequestParam(value = "id", required = true) String surveyId,
+			@RequestParam(value = "role", required = false) String expectedRole,
+			@RequestParam(value = "campaign", required = true) String campaignId,
 			@RequestParam(value = "idep", required = true) String idep) {
 
 		return authorizationService.isAuthorized(surveyId, expectedRole, campaignId, idep) ? 
