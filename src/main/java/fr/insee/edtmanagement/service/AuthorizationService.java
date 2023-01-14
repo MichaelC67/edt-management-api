@@ -19,8 +19,9 @@ public class AuthorizationService {
 		log.debug("Checking Authorization of idep : {} on surveyId : {} campaign : {} role :  {} ", idep, surveyId,
 				campaignId, expectedRole);
 
-		if(Constants.REVIEWER.equals(expectedRole) && checkReviewerHabilitation(surveyId, campaignId, idep))
-			return true;
+		if(Constants.REVIEWER.equals(expectedRole)) {
+			return checkReviewerHabilitation(surveyId, campaignId, idep);
+		}
 		
 		// Queen Back Office  doesn t send role when it is an interviewer
 		 return checkInterviewerHabilitation(surveyId, campaignId, idep);
