@@ -1,5 +1,8 @@
 package fr.insee.edtmanagement.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,13 +21,15 @@ public class HabilitationController {
 
 	@Operation(summary = "Check the habilitation for a survey")
 	@GetMapping(path = Constants.API_HABILITATION_URL)
-	public ResponseEntity<String> authorized(@RequestParam(value = "id", required = true) String surveyId,
+	public ResponseEntity<Map<String, String>> authorized(@RequestParam(value = "id", required = true) String surveyId,
 			@RequestParam(value = "role", required = false) String expectedRole,
 			@RequestParam(value = "campaign", required = true) String campaignId,
 			@RequestParam(value = "idep", required = true) String idep) {
-		
-				return ResponseEntity.ok(authorizationService.isAuthorized(surveyId, expectedRole, campaignId, idep) ? 
-						 Constants.HABILITATED_RESPONSE_BODY : Constants.NO_HABILITATION_RESPONSE_BODY);
+
+		Map<String, String> bodyMap = new HashMap<>();
+		bodyMap.put(Constants.HABILITATED_RESPONSE_BODY_KEY,
+				(authorizationService.isAuthorized(surveyId, expectedRole, campaignId, idep)).toString());
+		return ResponseEntity.ok(bodyMap);
 
 	}
 

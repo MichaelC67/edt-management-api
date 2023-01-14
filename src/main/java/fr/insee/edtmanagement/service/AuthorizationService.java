@@ -14,7 +14,7 @@ public class AuthorizationService {
 	@Autowired
 	private SurveyAssigmentRepository surveyAssigmentRepository;
 
-	public boolean isAuthorized(String surveyId, String expectedRole, String campaignId, String idep) {
+	public Boolean isAuthorized(String surveyId, String expectedRole, String campaignId, String idep) {
 
 		log.debug("Checking Authorization of idep : {} on surveyId : {} campaign : {} role :  {} ", idep, surveyId,
 				campaignId, expectedRole);
