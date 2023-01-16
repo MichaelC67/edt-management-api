@@ -16,7 +16,7 @@ public class AuthorizationService {
 
 	public Boolean isAuthorized(String surveyId, String expectedRole, String campaignId, String idep) {
 
-		log.debug("Checking Authorization of idep : {} on surveyId : {} campaign : {} role :  {} ", idep, surveyId,
+		log.debug("Service checking Authorization of idep : {} on surveyId : {} campaign : {} role :  {} ", idep, surveyId,
 				campaignId, expectedRole);
 
 		if(Constants.REVIEWER.equals(expectedRole)) {
