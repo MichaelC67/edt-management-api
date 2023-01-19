@@ -14,27 +14,27 @@ public class AuthorizationService {
 	@Autowired
 	private SurveyAssigmentRepository surveyAssigmentRepository;
 
-	public boolean isAuthorized(String surveyId, String expectedRole, String campaignId, String idep) {
+	public Boolean isAuthorized(String surveyId, String expectedRole, String campaignId, String idep) {
 
-		log.debug("Checking Authorization of idep : {} on surveyId : {} campaign : {} role :  {} ", idep, surveyId,
+		log.debug("Service checking Authorization of idep : {} on surveyId : {} campaign : {} role :  {} ", idep, surveyId,
 				campaignId, expectedRole);
 
-		if(Constants.REVIEWER.equals(expectedRole) && checkReviewerHabilitation(surveyId, campaignId, idep))
-			return true;
+		if(Constants.REVIEWER.equals(expectedRole)) {
+			return checkReviewerHabilitation(surveyId, campaignId, idep);
+		}
 		
-		// TODO Check if in Queen Back Office interviewer role is omitted
-		//if(Constants.INTERVIEWER.equals(expectedRole) && checkInterviewerHabilitation(surveyId, campaignId, idep)) return true;
+		// Queen Back Office  doesn t send role when it is an interviewer
+		 return checkInterviewerHabilitation(surveyId, campaignId, idep);
 		
-		return false;
 	}
 
-//	private boolean checkInterviewerHabilitation(String surveyId, String campaignId, String idep) {
-//		return surveyAssigmentRepository
-//				.findByReviewerIdAndSurveyUnitIdAndCampaignId(idep, surveyId, campaignId) != null;
-//	}
+	private boolean checkInterviewerHabilitation(String surveyId, String campaignId, String idep) {
+		return surveyAssigmentRepository
+				.findByInterviewerIdAndSurveyUnitIdAndCampaignId(idep, surveyId, campaignId).isPresent();
+	}
 
 	private boolean checkReviewerHabilitation(String surveyId, String campaignId, String idep) {
 		return surveyAssigmentRepository
-				.findByReviewerIdAndSurveyUnitIdAndCampaignId(idep, surveyId, campaignId) != null;
+				.findByReviewerIdAndSurveyUnitIdAndCampaignId(idep, surveyId, campaignId).isPresent();
 	}
 }

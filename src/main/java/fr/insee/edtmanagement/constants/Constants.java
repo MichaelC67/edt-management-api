@@ -10,8 +10,7 @@ public class Constants {
 	public static final String REVIEWER = "reviewer";
 	
 	//expected Response by Queen-Back-Office for habilitated ressources
-	public static final String HABILITATED_RESPONSE_BODY = "habilitated";
-	public static final String NO_HABILITATION_RESPONSE_BODY = "";
+	public static final String HABILITATED_RESPONSE_BODY_KEY = "habilitated";
 	
 	//Endpoints URLs
 	//DbController
