@@ -30,7 +30,7 @@ public class AuthorizationService {
 
 	private boolean checkInterviewerHabilitation(String surveyId, String campaignId, String userId) {
 		return surveyAssigmentRepository
-				.findByInterviewerIdAndSurveyUnitIdAndCampaignId(userId, surveyId, campaignId).isPresent();
+				.findByInterviewerIdIgnoreCaseAndSurveyUnitIdAndCampaignId(userId, surveyId, campaignId).isPresent();
 	}
 
 	private boolean checkReviewerHabilitation(String surveyId, String campaignId, String userId) {
