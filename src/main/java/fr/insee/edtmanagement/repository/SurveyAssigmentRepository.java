@@ -13,7 +13,7 @@ public interface SurveyAssigmentRepository extends CrudRepository<SurveyAssigmen
 	Optional<List<SurveyAssigment>> findByReviewerId(String reviewerId);
 	Optional<SurveyAssigment> findBySurveyUnitIdIgnoreCase(String surveyUnitId);
 
-	Optional<SurveyAssigment> findByInterviewerIdAndSurveyUnitIdAndCampaignId(String interviewerId, String surveyUnitId,
+	Optional<SurveyAssigment> findByInterviewerIdIgnoreCaseAndSurveyUnitIdAndCampaignId(String interviewerId, String surveyUnitId,
 			String campaignId);
 
 	Optional<SurveyAssigment> findByReviewerIdAndSurveyUnitIdAndCampaignId(String reviewerId, String surveyUnitId,
