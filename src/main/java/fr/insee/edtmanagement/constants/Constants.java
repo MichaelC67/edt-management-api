@@ -27,5 +27,8 @@ public class Constants {
 	public static final String API_ASSIGMENT_FOR_SURVEYID_URL="/api/survey-assigment/survey-unit/{survey-id}";
 	public static final String API_ASSIGMENT_FOR_INTEVIEWERID_URL="/api/survey-assigment/interviewer/{interviewer-id}";
 	public static final String API_ASSIGMENT_FOR_REVIEWERID_URL="/api/survey-assigment/reviewer/{reviewer-id}";
+	
+	public static final String API_ASSIGMENTS_AUTHENTICATED_INTERVIEWER = "/api/survey-assigment/interviewer/my-surveys";
+	public static final String API_ASSIGMENTS_AUTHENTICATED_REVIEWER = "/api/survey-assigment/reviewer/my-surveys";
 
 }

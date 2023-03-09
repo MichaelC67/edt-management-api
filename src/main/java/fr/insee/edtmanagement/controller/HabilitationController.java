@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import ch.qos.logback.classic.Logger;
 import fr.insee.edtmanagement.constants.Constants;
 import fr.insee.edtmanagement.dto.HabilitationDto;
 import fr.insee.edtmanagement.service.AuthorizationService;
@@ -27,15 +26,15 @@ public class HabilitationController {
 			@RequestParam(value = "id", required = true) String surveyId,
 			@RequestParam(value = "role", required = false) String expectedRole,
 			@RequestParam(value = "campaign", required = true) String campaignId,
-			@RequestParam(value = "idep", required = true) String idep) {
+			@RequestParam(value = "idep", required = true) String userId) {
 		
-		log.info("Checking Habilitation for survey {} in campaign  {} with role {} as {} ",surveyId,campaignId,expectedRole,idep);
+		log.info("Checking Habilitation for survey {} in campaign  {} with role {} as {} ",surveyId,campaignId,expectedRole,userId);
 
 		HabilitationDto habilitation = new HabilitationDto();
-		boolean kAutorisation= authorizationService.isAuthorized(surveyId, expectedRole, campaignId, idep);	
+		boolean kAutorisation= authorizationService.isAuthorized(surveyId, expectedRole, campaignId, userId);	
 		habilitation.setHabilitated(kAutorisation);
 		
-		log.info("Access " + (kAutorisation?" granted" : "denied")+" for {} on survey {} ", idep,surveyId);
+		log.info("Access " + (kAutorisation ? "granted" : "denied") + " for {} on survey {} ", userId, surveyId);
 
 		return new ResponseEntity<>(habilitation, HttpStatus.OK);
 
