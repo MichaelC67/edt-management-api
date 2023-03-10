@@ -35,7 +35,6 @@ public class SurveyAssigmentService {
 	@Autowired
 	private SurveyAssigmentRepository surveyAssigmentRepository;
 
-	@PostConstruct
 	public boolean initDB() {
 		log.info("Init  DB from {} ", initialResource.getFilename());
 		return populateDB(initialResource);
