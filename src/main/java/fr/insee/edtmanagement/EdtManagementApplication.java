@@ -11,7 +11,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
 
 @OpenAPIDefinition(
 		info = @Info(title = "EDT Management API"),
-		servers = {@Server(url = "{host}/", description = "Default Server URL")}
+		servers = {@Server(url = "/", description = "Default Server URL")}
 
 		)
 @SpringBootApplication
