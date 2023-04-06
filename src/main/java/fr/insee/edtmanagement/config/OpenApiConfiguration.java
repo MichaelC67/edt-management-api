@@ -20,7 +20,7 @@ public class OpenApiConfiguration {
     @Value("${fr.insee.edtmanagement.auth-server-url:}")
     private String authServerURL;
 
-    @Value("${info.app.version}")
+    @Value("${info.app.version:}")
     private String appVersion;
     
     @Value("${fr.insee.edtmanagement.auth-server-query-params:}")
