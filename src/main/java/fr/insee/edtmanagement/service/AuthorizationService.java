@@ -1,6 +1,7 @@
 package fr.insee.edtmanagement.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import fr.insee.edtmanagement.constants.Constants;
@@ -14,6 +15,7 @@ public class AuthorizationService {
 	@Autowired
 	private SurveyAssigmentRepository surveyAssigmentRepository;
 
+	@Cacheable("isAuthorized")
 	public Boolean isAuthorized(String surveyId, String expectedRole, String campaignId, String userId) {
 
 		log.debug("Service checking Authorization of userId : {} on surveyId : {} campaign : {} role :  {} ", userId, surveyId,
