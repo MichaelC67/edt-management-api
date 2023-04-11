@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +42,7 @@ public class SurveyAssigmentService {
 	}
 
 	//TODO throw exception if failure
+	@CacheEvict(value = "isAuthorized", allEntries = true)
 	public boolean populateDB(@NotNull Resource resource) {
 		
 		boolean kDBPopulated = false;

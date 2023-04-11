@@ -2,10 +2,12 @@ package fr.insee.edtmanagement;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.cache.annotation.EnableCaching;
 
 import fr.insee.edtmanagement.utils.PropertiesLogger;
 
 @SpringBootApplication
+@EnableCaching
 public class EdtManagementApplication {
 
 
