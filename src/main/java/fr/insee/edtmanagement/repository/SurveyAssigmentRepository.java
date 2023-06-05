@@ -16,7 +16,7 @@ public interface SurveyAssigmentRepository extends CrudRepository<SurveyAssigmen
 	Optional<SurveyAssigment> findByInterviewerIdIgnoreCaseAndSurveyUnitIdAndCampaignId(String interviewerId, String surveyUnitId,
 			String campaignId);
 
-	Optional<SurveyAssigment> findByReviewerIdAndSurveyUnitIdAndCampaignId(String reviewerId, String surveyUnitId,
+	Optional<SurveyAssigment> findByReviewerIdIgnoreCaseAndSurveyUnitIdAndCampaignId(String reviewerId, String surveyUnitId,
 			String campaignId);
 	
 	Optional<List<SurveyAssigment>> findByReviewerIdIgnoreCase(String userId);
