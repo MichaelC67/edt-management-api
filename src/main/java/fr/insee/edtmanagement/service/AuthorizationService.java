@@ -37,6 +37,6 @@ public class AuthorizationService {
 
 	private boolean checkReviewerHabilitation(String surveyId, String campaignId, String userId) {
 		return surveyAssigmentRepository
-				.findByReviewerIdAndSurveyUnitIdAndCampaignId(userId, surveyId, campaignId).isPresent();
+				.findByReviewerIdIgnoreCaseAndSurveyUnitIdAndCampaignId(userId, surveyId, campaignId).isPresent();          
 	}
 }
