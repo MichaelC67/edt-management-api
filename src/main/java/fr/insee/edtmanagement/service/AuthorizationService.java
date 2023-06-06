@@ -16,7 +16,7 @@ public class AuthorizationService {
 	@Autowired
 	private SurveyAssigmentRepository surveyAssigmentRepository;
 	
-	@Value("${fr.insee.edtmanagement.loose-check-habilitation}")
+	@Value("${fr.insee.edtmanagement.loose-check-habilitation:false}")
 	private boolean looseCheckHabilitation;
 
 	@Cacheable("isAuthorized")
