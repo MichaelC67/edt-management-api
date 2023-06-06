@@ -28,9 +28,15 @@ public class HabilitationController {
 			@RequestParam(value = "campaign", required = true) String campaignId,
 			@RequestParam(value = "idep", required = true) String userId) {
 		
+		//Queen Back Office doesnt send the role when it concerns an INTERVIEWER
+		if (expectedRole == null) {
+			expectedRole = Constants.INTERVIEWER;
+		}
+		
 		log.info("Checking Habilitation for survey {} in campaign  {} with role {} as {} ",surveyId,campaignId,expectedRole,userId);
 
 		HabilitationDto habilitation = new HabilitationDto();
+		
 		boolean kAutorisation= authorizationService.isAuthorized(surveyId, expectedRole, campaignId, userId);	
 		habilitation.setHabilitated(kAutorisation);
 		
