@@ -3,6 +3,7 @@ package fr.insee.edtmanagement.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +30,7 @@ public class HabilitationController {
 			@RequestParam(value = "idep", required = true) String userId) {
 		
 		//Queen Back Office doesnt send the role when it concerns an INTERVIEWER
-		if (expectedRole == null) {
+		if (!StringUtils.hasLength(expectedRole)) {
 			expectedRole = Constants.INTERVIEWER;
 		}
 		
