@@ -92,4 +92,4 @@ jobs:
           push: true
           tags: |
             inseefrlab/edt-management-api:${{ needs.get_version.outputs.version }}
-            nseefrlab/edt-management-api:latest
+            inseefrlab/edt-management-api:latest
