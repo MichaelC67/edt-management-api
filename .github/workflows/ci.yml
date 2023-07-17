@@ -27,8 +27,8 @@ jobs:
           java-version: '17'          
       - name: Build and analyze
         env:
-          SONAR_TOKEN: ${{secrets.ALT_SONAR_TOKEN}}      
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=InseeFrLab_edt-management-api -Dsonar.organization=inseefrlab -Dsonar.token=$SONAR_TOKEN          
+          ALT_SONAR_TOKEN: '${{secrets.ALT_SONAR_TOKEN}}'      
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=InseeFrLab_edt-management-api -Dsonar.organization=inseefrlab -Dsonar.token=$ALT_SONAR_TOKEN          
           
   build:
     needs: test
