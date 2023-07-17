@@ -14,19 +14,24 @@ on:
       - main
 jobs:
   sonarcloud:
+    if: |
+      github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-      with:
-        # Disabling shallow clone is recommended for improving relevancy of reporting
-        fetch-depth: 0
-    - name: SonarCloud Scan
-      uses: sonarsource/sonarcloud-github-action@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} 
-
-
+      - name: Check out the repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Set up JDK    
+        uses: actions/setup-java@v3
+        with:        
+          distribution: 'temurin' # See 'Supported distributions' for available options
+          java-version: '17'          
+      - name: Build and analyze
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=InseeFrLab_edt-management-api -Dsonar.organization=inseefrlab -Dsonar.token=$SONAR_TOKEN
+        env: 
+          SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}         
+  
   build:
     needs: sonarcloud
     runs-on: ubuntu-latest
