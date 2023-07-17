@@ -5,6 +5,9 @@
 
 name: EDT CI
 
+env:
+  SONAR_TOKEN : 
+
 on:
   push:
     branches:
@@ -26,10 +29,8 @@ jobs:
           distribution: 'temurin' # See 'Supported distributions' for available options
           java-version: '17'          
       - name: Build and analyze     
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=InseeFrLab_edt-management-api -Dsonar.organization=inseefrlab
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.ALT_SONAR_TOKEN }}
+        run:  echo "mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=InseeFrLab_edt-management-api -Dsonar.organization=inseefrlab -Dsonar.token=${{secrets.ALT_SONAR_TOKEN}}"
+
   build:
     needs: test
     runs-on: ubuntu-latest
