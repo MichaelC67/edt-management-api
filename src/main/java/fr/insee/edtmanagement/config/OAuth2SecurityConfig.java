@@ -68,10 +68,10 @@ public class OAuth2SecurityConfig {
 						.requestMatchers("/*").permitAll()
 						.anyRequest().authenticated())
 				// Enable JWT Authentication
-				.oauth2ResourceServer(oauth2 -> {
+				.oauth2ResourceServer(oauth2 -> 
 	        oauth2.jwt()
 	          .jwtAuthenticationConverter(jwtAuthenticationConverter());
-	      })
+	      )
 	      .build();
 	}
 	
