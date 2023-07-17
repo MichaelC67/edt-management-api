@@ -20,6 +20,8 @@
 		<opencsv.version>4.1</opencsv.version>
 		<springdoc-openapi-starter-webmvc-ui.version>2.1.0</springdoc-openapi-starter-webmvc-ui.version>
 		<surefire.version>3.1.2</surefire.version>
+		<sonar.organization>inseefrlab</sonar.organization>
+  		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 	<dependencies>
 		<dependency>

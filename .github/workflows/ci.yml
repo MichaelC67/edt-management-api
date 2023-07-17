@@ -16,20 +16,35 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out the repo
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: Set up JDK    
         uses: actions/setup-java@v3
         with:        
           distribution: 'temurin' # See 'Supported distributions' for available options
           java-version: '17'          
-      - name: Test, package and analyze with maven & SonarCloud
-        run: mvn verify sonar:sonar -Dsonar.projectKey=InseeFrLab_edt-management-api -Dsonar.organization=inseefrlab -Dsonar.host.url=https://sonarcloud.io
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: Build and analyze
         env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=InseeFrLab_edt-management-api      
+      
           
   build:
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
@@ -83,6 +98,7 @@ jobs:
           draft: false
           generate_release_notes: true
           prerelease: false
+          
   docker:
     needs: get_version
     runs-on: ubuntu-latest
