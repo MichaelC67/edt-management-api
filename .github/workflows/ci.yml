@@ -25,11 +25,11 @@ jobs:
         with:        
           distribution: 'temurin' # See 'Supported distributions' for available options
           java-version: '17'          
-      - name: Build and analyze
+      - name: Build and analyze     
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=InseeFrLab_edt-management-api -Dsonar.organization=inseefrlab
         env:
-          ALT_SONAR_TOKEN: '${{secrets.ALT_SONAR_TOKEN}}'      
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=InseeFrLab_edt-management-api -Dsonar.organization=inseefrlab -Dsonar.token=29c83f81d573e04e6348bce4d0e34261ce2e3b81 
-          
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.ALT_SONAR_TOKEN }}
   build:
     needs: test
     runs-on: ubuntu-latest
