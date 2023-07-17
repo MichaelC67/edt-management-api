@@ -10,7 +10,7 @@
 		<relativePath /> <!-- lookup parent from repository --> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>fr.insee</groupId>
-	<artifactId>edt-management</artifactId>
+	<artifactId>edt-management-api</artifactId>
 	<version>0.2.1</version>
 	<name>edt-management</name>
 	<description>EDT management API</description>
@@ -22,6 +22,7 @@
 		<surefire.version>3.1.2</surefire.version>
 		<sonar.organization>inseefrlab</sonar.organization>
   		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+  		<sonar.projectKey>InseeFrLab_edt-management-api</sonar.projectKey>
 	</properties>
 	<dependencies>
 		<dependency>
