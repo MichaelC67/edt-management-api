@@ -112,17 +112,6 @@
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>${jacoco.version}</version>
-				<configuration>
-					<destFile>
-						${basedir}/target/coverage-reports/jacoco-unit.exec</destFile>
-					<dataFile>
-						${basedir}/target/coverage-reports/jacoco-unit.exec</dataFile>
-					<output>file</output>
-					<append>true</append>
-					<excludes>
-						<exclude>*MethodAccess</exclude>
-					</excludes>
-				</configuration>
 				<executions>
 					<execution>
 						<id>jacoco-initialize</id>
