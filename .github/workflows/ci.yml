@@ -13,8 +13,23 @@ on:
     branches:
       - main
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+      - name: Set up JDK    
+        uses: actions/setup-java@v3
+        with:        
+          distribution: 'temurin' # See 'Supported distributions' for available options
+          java-version: '17'          
+      - name: Test, package and analyze with maven & SonarCloud
+        run: mvn verify sonar:sonar -Dsonar.projectKey=InseeFrLab_edt-management-api -Dsonar.organization=inseefrlab -Dsonar.host.url=https://sonarcloud.io
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          
   build:
-    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
@@ -32,30 +47,7 @@ jobs:
           name: jar
           path: target/*.jar
           retention-days: 1
-      - name: 'Upload Jacoco report'
-        uses: actions/upload-artifact@v3
-        with:
-          name: coverage
-          path: target/site/jacoco
-          retention-days: 1
 
-  sonarcloud:
-        runs-on: ubuntu-latest
-        needs: build
-        steps:
-            - uses: actions/checkout@v2
-              with:
-                  fetch-depth: 0
-            - name: Download coverage artifact
-              uses: actions/download-artifact@v2
-              with:
-                  name: coverage
-                  path: target/site/jacoco
-            - name: SonarCloud Scan
-              uses: sonarsource/sonarcloud-github-action@master
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   get_version:
     needs: build
     if: |
