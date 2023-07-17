@@ -70,7 +70,7 @@ public class OAuth2SecurityConfig {
 				// Enable JWT Authentication
 				.oauth2ResourceServer(oauth2 -> 
 	        oauth2.jwt()
-	          .jwtAuthenticationConverter(jwtAuthenticationConverter());
+	          .jwtAuthenticationConverter(jwtAuthenticationConverter())
 	      )
 	      .build();
 	}
