@@ -1,5 +1,7 @@
 package fr.insee.edtmanagement.config;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -51,15 +53,11 @@ public class OAuth2SecurityConfig {
 
 	@Bean
 	protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
-		return http
-				.cors()
-				.and()
-				.csrf()
-				.disable() //API MODE
-				.sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-				.and()
-				.authorizeHttpRequests(
+		 	http
+		 	.csrf(csrf -> csrf.disable())//API MODE
+		 	.cors(withDefaults())
+		 	.sessionManagement(sessionsManagment -> sessionsManagment.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+			.authorizeHttpRequests(
 						configurer -> 
 						configurer
 						.requestMatchers(AUTH_WHITELIST).permitAll()
@@ -68,11 +66,12 @@ public class OAuth2SecurityConfig {
 						.requestMatchers("/*").permitAll()
 						.anyRequest().authenticated())
 				// Enable JWT Authentication
-				.oauth2ResourceServer(oauth2 -> 
-	        oauth2.jwt()
-	          .jwtAuthenticationConverter(jwtAuthenticationConverter())
-	      )
-	      .build();
+				.oauth2ResourceServer(
+						(oauth2) -> 
+							oauth2.jwt( jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())));
+	        
+
+				return http.build();
 	}
 	
 	@Bean

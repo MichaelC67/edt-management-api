@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>fr.insee</groupId>
 	<artifactId>edt-management-api</artifactId>
-	<version>0.2.1</version>
+	<version>0.2.2</version>
 	<name>edt-management</name>
 	<description>EDT management API</description>
 	<properties>

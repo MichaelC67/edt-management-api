@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
-
+import static org.springframework.security.config.Customizer.withDefaults;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -18,18 +18,21 @@ import lombok.extern.slf4j.Slf4j;
 public class NoAuthSecurityConfig {
 
 	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
+	public SecurityFilterChain filterChain(HttpSecurity	 http) throws Exception {     
+		
 		http
-		.headers()
-		.frameOptions()
-		.disable()// for h2 console in noauth mode
-		.and()
-		.csrf()
-		.disable() // required to allow POST method
-		.authorizeHttpRequests()
-		.anyRequest()
-		.permitAll();
+		.headers((headers) ->
+			headers
+				.contentTypeOptions(withDefaults())
+				.xssProtection(withDefaults())
+				.cacheControl(withDefaults())
+				.httpStrictTransportSecurity(withDefaults())
+				.frameOptions(frameOptions -> frameOptions.sameOrigin()))
+		.csrf(csrf -> csrf.disable())
+		.authorizeHttpRequests(auth -> auth
+	            .anyRequest().permitAll()
+	        );
+
 		
 		log.info("Default authentication activated - no auth ");
 		
