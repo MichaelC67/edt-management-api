@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
 import org.springframework.security.web.SecurityFilterChain;
 import static org.springframework.security.config.Customizer.withDefaults;
 import lombok.extern.slf4j.Slf4j;
@@ -21,13 +22,13 @@ public class NoAuthSecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity	 http) throws Exception {     
 		
 		http
-		.headers((headers) ->
+		.headers(headers ->
 			headers
 				.contentTypeOptions(withDefaults())
 				.xssProtection(withDefaults())
 				.cacheControl(withDefaults())
 				.httpStrictTransportSecurity(withDefaults())
-				.frameOptions(frameOptions -> frameOptions.sameOrigin()))
+				.frameOptions(FrameOptionsConfig::sameOrigin))
 		.csrf(csrf -> csrf.disable())
 		.authorizeHttpRequests(auth -> auth
 	            .anyRequest().permitAll()
