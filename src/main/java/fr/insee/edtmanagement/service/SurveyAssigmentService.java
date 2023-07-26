@@ -16,7 +16,6 @@ import com.opencsv.bean.CsvToBeanBuilder;
 
 import fr.insee.edtmanagement.domain.SurveyAssigment;
 import fr.insee.edtmanagement.repository.SurveyAssigmentRepository;
-import jakarta.annotation.PostConstruct;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 
