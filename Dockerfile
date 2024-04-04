@@ -1,5 +1,10 @@
-FROM eclipse-temurin:17-jre
-VOLUME /tmp
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+FROM eclipse-temurin:21-jre-alpine
+WORKDIR /application
+
+RUN addgroup -g 10000 javagroup
+RUN adduser -D -s / -u 10000 javauser -G javagroup
+RUN chown -R 10000:10000 /application
+
+USER 10000
+COPY target/*.jar edt-management-api.jar
+ENTRYPOINT ["java", "-jar",  "/application/edt-management-api.jar"]
