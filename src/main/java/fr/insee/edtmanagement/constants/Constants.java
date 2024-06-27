@@ -5,9 +5,9 @@ public class Constants {
 	private Constants() {
 	}
 	
-	// Role declared by Queen-Back-Office
-	public static final String INTERVIEWER = "interviewer";
-	public static final String REVIEWER = "reviewer";
+	// Role declared by Queen-Back-Office => declared in uppercase since mid 2024
+	public static final String INTERVIEWER = "INTERVIEWER";
+	public static final String REVIEWER = "REVIEWER";
 	
 	//expected Response by Queen-Back-Office for habilitated ressources
 	public static final String HABILITATED_RESPONSE_BODY_KEY = "habilitated";
