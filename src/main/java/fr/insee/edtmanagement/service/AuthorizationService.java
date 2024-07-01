@@ -1,5 +1,6 @@
 package fr.insee.edtmanagement.service;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
@@ -25,7 +26,7 @@ public class AuthorizationService {
 		log.debug("Service checking Authorization of userId : {} on surveyId : {} campaign : {} role :  {} ", userId, surveyId,
 				campaignId, expectedRole);
 		
-		if (Constants.INTERVIEWER.equals(expectedRole)) {
+		if (Constants.INTERVIEWER.equals(StringUtils.upperCase(expectedRole))) {
 			if (checkInterviewerHabilitation(surveyId, campaignId, userId)) {
 				return true;
 				// Workaround to handle checkHabilitation request from queen BO in case of 
@@ -36,7 +37,7 @@ public class AuthorizationService {
 			}
 		}
 
-		if (Constants.REVIEWER.equals(expectedRole)) {
+		if (Constants.REVIEWER.equals(StringUtils.upperCase(expectedRole))) {
 			return checkReviewerHabilitation(surveyId, campaignId, userId);
 		}
 
