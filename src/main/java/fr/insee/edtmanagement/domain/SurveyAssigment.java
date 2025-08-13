@@ -39,5 +39,9 @@ public class SurveyAssigment {
     @CsvBindByPosition(position = 4)
     @NotNull
 	private String questionnaireModelId;
+    
+    @CsvBindByPosition(position = 5)
+    @NotNull
+	private String interrogationId;
 	
 }
