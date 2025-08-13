@@ -24,7 +24,7 @@ public class Constants {
 	public static final String API_HEALTHCHECK_URL = "/api/healthcheck";
 	
 	//SurveyAssigment
-	public static final String API_ASSIGMENT_FOR_SURVEYID_URL="/api/survey-assigment/survey-unit/{survey-id}";
+	public static final String API_ASSIGMENT_FOR_INTERROGATIONID_URL="/api/survey-assigment/interrogation/{interrogation-id}";
 	public static final String API_ASSIGMENT_FOR_INTEVIEWERID_URL="/api/survey-assigment/interviewer/{interviewer-id}";
 	public static final String API_ASSIGMENT_FOR_REVIEWERID_URL="/api/survey-assigment/reviewer/{reviewer-id}";
 	
