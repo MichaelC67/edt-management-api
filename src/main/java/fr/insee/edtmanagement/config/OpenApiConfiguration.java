@@ -32,7 +32,7 @@ public class OpenApiConfiguration {
 	   @Bean
 	    public OpenAPI customOpenApiOAuth() {
 	        final OpenAPI openapi = new OpenAPI()
-	        		.info(new Info().title("Swagger API REST EDT Managment").version(appVersion));
+	        		.info(new Info().title("EDT Managment").version(appVersion));
 	        
 	        
 	        openapi.components(new Components().addSecuritySchemes(SCHEMEKEYCLOAK, new SecurityScheme()

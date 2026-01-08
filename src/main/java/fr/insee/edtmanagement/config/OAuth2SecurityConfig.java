@@ -47,7 +47,9 @@ public class OAuth2SecurityConfig {
 	
 	private static final String[] AUTH_ADMIN_REQUIRED = {
 			Constants.API_UPDATEDB_URL,
-			Constants.API_UPDATEDB_WITH_FILE_URL
+			Constants.API_UPDATEDB_WITH_FILE_URL,
+			Constants.API_UPDATEDB_WITH_FILE_URL_BY_CAMPAIGN,
+			Constants.API_GET_ASSIGNMENTS_IN_DB
 	};
 
 
