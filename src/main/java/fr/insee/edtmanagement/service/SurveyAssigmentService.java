@@ -115,7 +115,7 @@ public class SurveyAssigmentService {
 	private void checkAllSurveyAssigmentApplyToCampaignId(List<SurveyAssigment> lstSurveyAssigments,
 			String campaignId) throws Exception{
 		
-		for (Iterator iterator = lstSurveyAssigments.iterator(); iterator.hasNext();) {
+		for (Iterator<SurveyAssigment> iterator = lstSurveyAssigments.iterator(); iterator.hasNext();) {
 			SurveyAssigment surveyAssigment = (SurveyAssigment) iterator.next();
 			
 			if(!surveyAssigment.getCampaignId().equals(campaignId)) {
@@ -153,12 +153,14 @@ public class SurveyAssigmentService {
 		return lstSurveyAssigments;
 	}
 
+	@CacheEvict(value = "isAuthorized", allEntries = true)
 	public void cleanFullDB() {
 		surveyAssigmentRepository.deleteAll();
 		log.info("DB cleared !");
 	}
 	
 	@Transactional
+	@CacheEvict(value = "isAuthorized", allEntries = true)
 	public int cleanDBByCampaignId(String campaignId) {
 		int nbSurveyAssigmentDeleted=surveyAssigmentRepository.deleteByCampaignId(campaignId);
 		log.info("{} surveyAssignments removed from DB cleared for campaignId {} ",nbSurveyAssigmentDeleted,campaignId);
