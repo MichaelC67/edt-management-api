@@ -57,6 +57,8 @@ public class SurveyAssigmentService {
 
 			log.info("{} survey assignments found in {} ", lstSurveyAssigments.size(), resource.getFilename());
 
+			log.info("Db about to be cleaned" );
+			
 			cleanFullDB();
 
 			surveyAssigmentRepository.saveAll(lstSurveyAssigments);
@@ -92,7 +94,7 @@ public class SurveyAssigmentService {
 
 			surveyAssigmentRepository.saveAll(lstSurveyAssigments);
 
-			log.info("{} survey assignments saved in DB for campaign {}", surveyAssigmentRepository.count(),campaignId);
+			log.info("{} survey assignments saved in DB for campaign {}", lstSurveyAssigments.size(),campaignId);
 			
 			kDBPopulated = true;
 
@@ -157,11 +159,10 @@ public class SurveyAssigmentService {
 	}
 	
 	@Transactional
-	public void cleanDBByCampaignId(String campaignId) {
-		int NbSurveyAssigmentDeleted=surveyAssigmentRepository.deleteByCampaignId(campaignId);
-		log.info(NbSurveyAssigmentDeleted +" removed from DB cleared for campaignId !");
+	public int cleanDBByCampaignId(String campaignId) {
+		int nbSurveyAssigmentDeleted=surveyAssigmentRepository.deleteByCampaignId(campaignId);
+		log.info("{} surveyAssignments removed from DB cleared for campaignId {} ",nbSurveyAssigmentDeleted,campaignId);
+		return nbSurveyAssigmentDeleted;
 	}
-
-
 
 }
