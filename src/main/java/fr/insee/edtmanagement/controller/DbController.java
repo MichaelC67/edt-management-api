@@ -3,13 +3,17 @@ package fr.insee.edtmanagement.controller;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -58,12 +62,8 @@ public class DbController {
 		} catch (Exception e) {
 			throw new RuntimeException("CSV Export failed", e);
 		}
-
 		writer.flush();
-
 	}
-
-
 	
 	@Operation(summary = "Integrate assignment file")
 	@PostMapping(
@@ -84,6 +84,18 @@ public class DbController {
 		boolean kDbUpdated = surveyAssigmentService.populateDBByCampaignId(file.getResource(),campaignId);
 		return  kDbUpdated ? ResponseEntity.ok("Db Updated !") : ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 	}
+	
+	@Operation(summary = "Delete assignments by campaignId")
+	@DeleteMapping(path = Constants.API_UPDATEDB_DELETE_ASSIGNMENTS_BY_CAMPAIGN)
+	public ResponseEntity<Map<String, String>> deleteByCampaignId(@RequestParam("campaignId") final String campaignId) {
+	    int deleted = surveyAssigmentService.cleanDBByCampaignId(campaignId);
+	    Map<String, String> response = new HashMap<>();
+	    response.put("campaignId", campaignId);
+	    response.put("deletedRows", String.valueOf(deleted));
+	    return ResponseEntity.ok(response); 
+	}
+	
+	
 	
 
 }

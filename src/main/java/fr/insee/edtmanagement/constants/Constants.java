@@ -17,6 +17,7 @@ public class Constants {
 	public static final String API_UPDATEDB_URL =  "/api/admin/update-db";
 	public static final String API_UPDATEDB_WITH_FILE_URL ="/api/admin/update-db-with-file";
 	public static final String API_UPDATEDB_WITH_FILE_URL_BY_CAMPAIGN ="/api/admin/update-db-with-file-by-campaign";
+	public static final String API_UPDATEDB_DELETE_ASSIGNMENTS_BY_CAMPAIGN ="/api/admin/delete-by-campaign";	
 	public static final String API_GET_ASSIGNMENTS_IN_DB ="/api/admin/get-survey-assignements-in-db";
 	
 	//HabilitationController (expected by Queen-Back-Office)

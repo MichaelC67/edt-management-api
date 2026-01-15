@@ -57,6 +57,8 @@ public class SurveyAssigmentService {
 
 			log.info("{} survey assignments found in {} ", lstSurveyAssigments.size(), resource.getFilename());
 
+			log.info("Db about to be cleaned" );
+			
 			cleanFullDB();
 
 			surveyAssigmentRepository.saveAll(lstSurveyAssigments);
@@ -92,7 +94,7 @@ public class SurveyAssigmentService {
 
 			surveyAssigmentRepository.saveAll(lstSurveyAssigments);
 
-			log.info("{} survey assignments saved in DB for campaign {}", surveyAssigmentRepository.count(),campaignId);
+			log.info("{} survey assignments saved in DB for campaign {}", lstSurveyAssigments.size(),campaignId);
 			
 			kDBPopulated = true;
 
@@ -113,7 +115,7 @@ public class SurveyAssigmentService {
 	private void checkAllSurveyAssigmentApplyToCampaignId(List<SurveyAssigment> lstSurveyAssigments,
 			String campaignId) throws Exception{
 		
-		for (Iterator iterator = lstSurveyAssigments.iterator(); iterator.hasNext();) {
+		for (Iterator<SurveyAssigment> iterator = lstSurveyAssigments.iterator(); iterator.hasNext();) {
 			SurveyAssigment surveyAssigment = (SurveyAssigment) iterator.next();
 			
 			if(!surveyAssigment.getCampaignId().equals(campaignId)) {
@@ -151,17 +153,18 @@ public class SurveyAssigmentService {
 		return lstSurveyAssigments;
 	}
 
+	@CacheEvict(value = "isAuthorized", allEntries = true)
 	public void cleanFullDB() {
 		surveyAssigmentRepository.deleteAll();
 		log.info("DB cleared !");
 	}
 	
 	@Transactional
-	public void cleanDBByCampaignId(String campaignId) {
-		int NbSurveyAssigmentDeleted=surveyAssigmentRepository.deleteByCampaignId(campaignId);
-		log.info(NbSurveyAssigmentDeleted +" removed from DB cleared for campaignId !");
+	@CacheEvict(value = "isAuthorized", allEntries = true)
+	public int cleanDBByCampaignId(String campaignId) {
+		int nbSurveyAssigmentDeleted=surveyAssigmentRepository.deleteByCampaignId(campaignId);
+		log.info("{} surveyAssignments removed from DB cleared for campaignId {} ",nbSurveyAssigmentDeleted,campaignId);
+		return nbSurveyAssigmentDeleted;
 	}
-
-
 
 }
